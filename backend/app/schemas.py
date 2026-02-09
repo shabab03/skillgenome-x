@@ -17,3 +17,17 @@ class ClusterResponse(BaseModel):
     region: str
     cluster_id: int
     top_skills: List[str]
+from typing import List
+
+class SkillDegree(BaseModel):
+    skill: str
+    degree: int
+
+class SkillSynergy(BaseModel):
+    skill_1: str
+    skill_2: str
+    weight: int
+
+class SkillGraphResponse(BaseModel):
+    top_skills: List[SkillDegree]
+    top_synergies: List[SkillSynergy]

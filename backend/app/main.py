@@ -1,3 +1,5 @@
+from app.services.graph_build import build_skill_graph
+from app.schemas import SkillGraphResponse
 # backend/app/main.py
 from app.services.bot_filter import apply_bot_filter
 import app.config as config
@@ -45,4 +47,18 @@ def get_overview():
             .str.split(";")
             .explode()
             .nunique()
+    }
+@app.get("/dashboard/skills/graph")
+def skill_graph():
+    _, top_skills, top_synergies = build_skill_graph(df)
+    return {
+        "top_skills": top_skills,
+        "top_synergies": top_synergies
+    }
+@app.get("/dashboard/skills/graph", response_model=SkillGraphResponse)
+def skill_graph():
+    _, top_skills, top_synergies = build_skill_graph(df)
+    return {
+        "top_skills": top_skills,
+        "top_synergies": top_synergies
     }
