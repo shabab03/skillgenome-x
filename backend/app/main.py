@@ -1,6 +1,7 @@
 from app.services.graph_build import build_skill_graph
 from app.schemas import SkillGraphResponse
 from app.services.clustering import cluster_regions
+from app.services.forecasting import forecast_skill
 # backend/app/main.py
 from app.services.bot_filter import apply_bot_filter
 import app.config as config
@@ -67,3 +68,6 @@ def skill_graph():
 @app.get("/dashboard/clusters")
 def regional_clusters(n_clusters: int = 3):
     return cluster_regions(df, n_clusters=n_clusters)
+@app.get("/dashboard/trends")
+def skill_trend(skill: str, horizon_weeks: int = 12):
+    return forecast_skill(df, skill, horizon_weeks)
